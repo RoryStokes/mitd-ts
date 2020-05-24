@@ -1,0 +1,124 @@
+{
+    "extends": [
+        "tslint:recommended",
+        "tslint-immutable",
+        "tslint-microsoft-contrib",
+        "tslint-sonarts",
+        "tslint-plugin-prettier",
+        "tslint-config-prettier",
+        "tslint-etc"
+    ],
+    "rulesDirectory": [
+        "node_modules/tslint-microsoft-contrib"
+    ],
+    "rules": {
+        "prettier": [
+            true,
+            ".prettierrc"
+        ],
+        "import-name": false,
+        "interface-name": [
+            true,
+            "never-prefix"
+        ],
+        "no-class": false,
+        "no-console": [
+            false
+        ],
+        "no-default-export": false,
+        "no-submodule-imports": false,
+        "no-delete": true,
+        "no-implicit-dependencies": [
+            true,
+            "dev",
+            [
+                "~",
+                "aws-lambda"
+            ]
+        ],
+        "no-import-side-effect": false,
+        "no-invalid-this": false,
+        "no-let": true,
+        "no-method-signature": true,
+        "no-mixed-interface": false,
+        "no-object-mutation": true,
+        "no-parameter-reassignment": true,
+        "no-parameter-properties": false,
+        "no-unexternalized-strings": false,
+        "no-unsafe-any": false,
+        "no-var-keyword": true,
+        "readonly-array": true,
+        "readonly-keyword": true,
+        "typedef": false,
+        "variable-name": [
+            true,
+            "allow-pascal-case"
+        ],
+        "no-expression-statement": [
+            false
+        ],
+        "no-void-expression": false,
+        "no-relative-imports": [
+            "allow-siblings"
+        ],
+        "no-this": [
+            false
+        ],
+        "no-if-statement": [
+            false
+        ],
+        "export-name": [
+            false
+        ],
+        "prefer-method-signature": false,
+        "no-suspicious-comment": false,
+        "noUnusedLocals": false,
+        "no-use-before-declare": false,
+        "no-reserved-keywords": false,
+        "no-function-constructor-with-string-args": false,
+        "no-increment-decrement": false,
+        "no-unnecessary-bind": false,
+        "function-constructor": true,
+        "increment-decrement": true,
+        "unnecessary-bind": true,
+        "no-redundant-parentheses": false,
+        "no-floating-promises": true,
+        "completed-docs": [
+            true,
+            {
+                "functions": {
+                    "visibilities": [
+                        "exported"
+                    ]
+                },
+                "methods": {
+                    "locations": "all",
+                    "privacies": [
+                        "public",
+                        "protected"
+                    ]
+                }
+            }
+        ],
+        "no-unused-variable": false,
+        "no-unused-declaration": {
+            "options": [
+                {
+                    "declarations": false,
+                    "imports": true
+                }
+            ]
+        },
+        "arrow-return-shorthand": true
+    },
+    "linterOptions": {
+        "exclude": [
+            "node_modules/**/*.ts",
+            "src/**/__test__/*.ts",
+            "src/generated/**/*.ts",
+            "src/db/migration/**.ts",
+            "package.json",
+            "./package.json"
+        ]
+    }
+}
