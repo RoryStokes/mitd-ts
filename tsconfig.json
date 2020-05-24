@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "lib": [
+      "es2019",
+      "es2020.bigint",
+      "es2020.string",
+      "es2020.symbol.wellknown",
+      "dom"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": ".build",
+    "preserveConstEnums": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "sourceMap": false,
+    "strict": true,
+    "inlineSources": true,
+    "inlineSourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "target": "es2019",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*", "**/*.js"]
+}

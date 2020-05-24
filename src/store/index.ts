@@ -5,6 +5,8 @@ export const actions = {
   ...discord.actions,
 };
 
-const reducer = combineReducers(discord.reducer);
+const reducer = combineReducers({
+  discord: discord.reducer,
+});
 
 export const store = createStore(reducer);

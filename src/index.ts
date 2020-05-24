@@ -4,7 +4,7 @@ import { store, actions } from "./store";
 const client = new Client();
 
 client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`Logged in as ${client.user?.tag}!`);
 });
 
 client.on("message", (msg) => {
@@ -14,4 +14,4 @@ client.on("message", (msg) => {
   store.dispatch(actions.receivedMessage(msg));
 });
 
-client.login("token");
+client.login(process.env.TOKEN);
