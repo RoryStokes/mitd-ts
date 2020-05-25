@@ -83,4 +83,50 @@ test.each([
     expect(selection.isValid(selection.balanced(pool, n, h))).toEqual(true);
 });
 
-//console.log(roles.roleSet(pool, 7, function (power) { return ((power["Civilian"] || 0) - (power["Murderer"] || 0)); }).map(function (r) { return r.name; }));
+test('selection.balanced(pool, 7, h) distributed according to h', () => {
+    const heuristics = new Array(1000).fill(0)
+        .map((_) => selection.balanced(pool, 7, h))
+        .map(selection.power)
+        .map(h);
+
+    const counts = new Map([...new Set(heuristics)].map(
+        x => [x, heuristics.filter(y => y === x).length]
+    ));
+
+    const bins = Array.from(counts.keys()).sort();
+
+    const chi2 = bins.map((heuristic, i) => {
+        const lower = i > 0 ? selection.normalcdf((bins[i-1] + bins[i]) / 2) : 0;
+        const upper = i+1 < bins.length ? selection.normalcdf((bins[i] + bins[i+1]) / 2) : 1;
+
+        const expected_frequency = heuristics.length * (upper - lower);
+        const actual_frequency = (counts.get(heuristic) || 0);
+
+        return (actual_frequency - expected_frequency) * (actual_frequency - expected_frequency) / expected_frequency
+    }).reduce((a, b) => a + b, 0);
+    
+    console.log(chi2);
+
+    expect(chi2).toBeLessThan([
+        0,
+        16.10265060582915,
+        19.442331991486046,
+        22.17444928125811,
+        24.619311529849806,
+        26.887242250097696,
+        29.031787668394877,
+        31.083789286467077,
+        33.0629644580484,
+        34.98284084904866,
+        36.853185862561965,
+        38.681330294184164,
+        40.47294595059592,
+        42.2325299376611,
+        43.96372065749167,
+        45.66951200765437,
+        47.35240326482634,
+        49.014506825208095,
+        50.65762746051235,
+        52.28332180031296,
+    ][bins.length - 1]); // Four sigma for chi^2 with bins.length - 1 points. 6e-5 chance of false positive
+});
