@@ -24,22 +24,26 @@ const murderer: Role = {
 
 var pool: Role[] = [civilian, murderer];
 
-test('selection.isValid respects Role.isValid', () => {
-  expect(selection.isValid([civilian, civilian, civilian])).toBe(false);
-  expect(selection.isValid([murderer, murderer, murderer])).toBe(false);
-  expect(selection.isValid([civilian, civilian, murderer, murderer])).toBe(false);
-  expect(selection.isValid([civilian, civilian, murderer])).toBe(true);
-  expect(selection.isValid([civilian, civilian, civilian, murderer])).toBe(true);
-  expect(selection.isValid([civilian, civilian, civilian, murderer, murderer])).toBe(true);
+test.each([
+    [[civilian, civilian, civilian], false],
+    [[murderer, murderer, murderer], false],
+    [[civilian, civilian, murderer, murderer], false],
+    [[civilian, civilian, murderer], true],
+    [[civilian, civilian, civilian, murderer], true],
+    [[civilian, civilian, civilian, murderer, murderer], true],
+])('selection.isValid respects Role.isValid', (roles, valid) => {
+  expect(selection.isValid(roles)).toBe(valid);
 });
 
-test('selection.power returns sum of Role.power', () => {
-    expect(selection.power([civilian, civilian, civilian])).toEqual({Civilian: 3});
-    expect(selection.power([civilian, civilian, murderer, murderer])).toEqual({Civilian: 2, Murderer: 5});
-    expect(selection.power([civilian, civilian, murderer])).toEqual({Civilian: 2, Murderer: 2.5});
-    expect(selection.power([civilian, civilian, civilian, murderer])).toEqual({Civilian: 3, Murderer: 2.5});
-    expect(selection.power([civilian, civilian, civilian, murderer, murderer])).toEqual({Civilian: 3, Murderer: 5});
-});
+test.each([
+    [[civilian, civilian, civilian], {Civilian: 3}],
+    [[civilian, civilian, murderer, murderer], {Civilian: 2, Murderer: 5}],
+    [[civilian, civilian, murderer], {Civilian: 2, Murderer: 2.5}],
+    [[civilian, civilian, civilian, murderer], {Civilian: 3, Murderer: 2.5}],
+    [[civilian, civilian, civilian, murderer, murderer], {Civilian: 3, Murderer: 5}],
+])('selection.power returns sum of Role.power', (roles, power) => {
+    expect(selection.power(roles)).toEqual(power);
+})
 
 test.each([
     [3],
